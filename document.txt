@@ -64,4 +64,12 @@ http://192.168.1.147:8080/api/receipt/confirm
   "user_to":"seller"
 }
 
+http://192.168.1.147:8080/api/receipt/get
+
+{
+  "token":"8f3a05a5-6011-48dc-ae2e-41d9057a111",
+  "id":15
+}
+
+
 

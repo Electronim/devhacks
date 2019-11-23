@@ -3,6 +3,7 @@ package server
 import (
 	"banking/mongodb"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -232,6 +233,43 @@ func ReceiptConfirm(res http.ResponseWriter, req *http.Request) {
 
 	if err := mongodb.ConfirmReceipt(query.UserFrom, query.UserTo, query.Id); err != nil {
 		res.WriteHeader(http.StatusBadRequest)
+		return
+	}
+}
+
+func ReceiptGet(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Content-Type", "application/json")
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	type tmp struct {
+		Token    string `json:"token"`
+		Id       int    `json:"id"`
+	}
+
+	var query tmp
+	if err = json.Unmarshal(body, &query); err != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if _, err := mongodb.GetSession(query.Token); err != nil {
+		res.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	var receipt mongodb.Receipt
+	if receipt, err = mongodb.GetReceipt(query.Id); err != nil {
+		fmt.Println(err)
+		res.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err := json.NewEncoder(res).Encode(receipt); err != nil {
+		res.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 }
