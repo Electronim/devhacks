@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/github.com/gorilla/mux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/github.com/thedevsaddam/renderer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/go.mongodb.org/mongo-driver" vcs="Git" />
+  </component>
+</project>

@@ -1,0 +1,67 @@
+http://192.168.1.147:8080/api/login
+
+{
+  "username":"test",
+  "password":"test",
+  "profile": 0
+}
+
+http://192.168.1.147:8080/api/product/add
+
+{
+  "token":"dc55c6a7-6bfb-4cab-a180-faf757ac2c9e\n",
+  "product_stock":{
+	"id":"1111111111111",
+    "name":"branza",
+    "price":34.23,
+    "total_available":5
+  }
+}
+
+http://192.168.1.147:8080/api/product/get
+
+{
+  "token":"e9f9712f-6c2c-4eaf-8d3d-01441818b09e\n",
+  "id":"1111111111111"
+}
+
+http://192.168.1.147:8080/api/receipt/create
+
+{
+  "token":"asdasd",
+  "products":[
+    {
+      "id":"111",{
+  "id": 5,
+  "products": [
+   {
+    "id": "1111111111111",
+    "quantity": 32
+   },
+   {
+    "id": "5941905044056",
+    "quantity": 32.29999923706055
+   }
+  ],
+  "total": 3294,
+  "status": 0
+ }
+      "quantity":32
+    },
+    {
+      "id":"1111231",
+      "quantity":32.3
+    }
+  ]
+}
+
+http://192.168.1.147:8080/api/receipt/confirm
+
+{
+  "token":"8f3a05a5-6011-48dc-ae2e-41d9057a111",
+  "id":15,
+  "user_from":"buyer",
+  "user_to":"seller"
+}
+
+
