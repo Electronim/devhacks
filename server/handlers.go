@@ -218,8 +218,8 @@ func ReceiptConfirm(res http.ResponseWriter, req *http.Request) {
 	type tmp struct {
 		Token    string `json:"token" bson:"token"`
 		Id       int    `json:"id"`
-		UserFrom string `json:"user_from"`
-		UserTo   string `json:"user_to"`
+		UserFrom string `json:"from"`
+		UserTo   string `json:"to"`
 	}
 
 	var query tmp
@@ -228,14 +228,18 @@ func ReceiptConfirm(res http.ResponseWriter, req *http.Request) {
 		_ = json.NewEncoder(res).Encode(status)
 		return
 	}
+	fmt.Println(query)
 
 	if _, err := mongodb.GetSession(query.Token); err != nil {
+		fmt.Println(err)
 		res.WriteHeader(http.StatusUnauthorized)
 		_ = json.NewEncoder(res).Encode(status)
 		return
 	}
 
 	if err := mongodb.ConfirmReceipt(query.UserFrom, query.UserTo, query.Id); err != nil {
+		fmt.Println(err)
+
 		res.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(res).Encode(status)
 		return
