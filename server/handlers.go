@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 )
 
@@ -270,7 +271,7 @@ func ReceiptGet(res http.ResponseWriter, req *http.Request) {
 
 	type ans struct {
 		Id         mongodb.MyId             `json:"id" bson:"id"`
-		Products   []mongodb.ReturnProduct `json:"products" bson:"products"`
+		Products   []mongodb.ReturnProductF `json:"products" bson:"products"`
 		TotalPrice float32          `json:"total" bson:"total"`
 		Status     mongodb.ReceiptStatus    `json:"status" bson:"status"`
 	}
@@ -285,10 +286,11 @@ func ReceiptGet(res http.ResponseWriter, req *http.Request) {
 			res.WriteHeader(http.StatusInternalServerError)
 			return
 		} else {
-			newProd := mongodb.ReturnProduct{
+			newProd := mongodb.ReturnProductF{
 				Id:             prod.Id,
 				Name:           prod.Name,
 				Price:          prod.Price,
+				Quantity:       int(math.Round(float64(obj.Quantity))),
 				TotalAvailable: obj.Quantity,
 				TotalSold:      prod.TotalSold,
 			}

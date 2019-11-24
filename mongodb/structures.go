@@ -43,6 +43,15 @@ type ReturnProduct struct {
 	TotalSold      float32 `json:"total_sold" bson:"total_sold"`
 }
 
+type ReturnProductF struct {
+	Id             string  `json:"id" bson:"id"`
+	Name           string  `json:"name" bson:"name"`
+	Price          float32 `json:"price" bson:"price"`
+	Quantity       int     `json:"quantity" bson:"quantity"`
+	TotalAvailable float32 `json:"total_available" bson:"total_available"`
+	TotalSold      float32 `json:"total_sold" bson:"total_sold"`
+}
+
 type ProductStock struct {
 	Id             string        `json:"id" bson:"id"`
 	Name           string        `json:"name" bson:"name"`
