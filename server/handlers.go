@@ -118,7 +118,7 @@ func ProductAdd(res http.ResponseWriter, req *http.Request) {
 
 	if err := mongodb.AddProduct(query.Token, query.ProductStock); err != nil {
 		res.WriteHeader(http.StatusBadRequest)
-		_ = json.NewEncoder(res).Encode(status);
+		_ = json.NewEncoder(res).Encode(status)
 		return
 	}
 
@@ -247,8 +247,8 @@ func ReceiptGet(res http.ResponseWriter, req *http.Request) {
 	}
 
 	type tmp struct {
-		Token    string `json:"token"`
-		Id       int    `json:"id"`
+		Token string `json:"token"`
+		Id    int    `json:"id"`
 	}
 
 	var query tmp
@@ -272,7 +272,7 @@ func ReceiptGet(res http.ResponseWriter, req *http.Request) {
 	type ans struct {
 		Id         mongodb.MyId             `json:"id" bson:"id"`
 		Products   []mongodb.ReturnProductF `json:"products" bson:"products"`
-		TotalPrice float32          `json:"total" bson:"total"`
+		TotalPrice float32                  `json:"total" bson:"total"`
 		Status     mongodb.ReceiptStatus    `json:"status" bson:"status"`
 	}
 

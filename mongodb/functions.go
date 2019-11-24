@@ -95,7 +95,7 @@ func GetProduct(id string) (Product, error) {
 	return product, nil
 }
 
-func GetReceipt(id int) (Receipt, error){
+func GetReceipt(id int) (Receipt, error) {
 	var receipt Receipt
 	var err error
 
