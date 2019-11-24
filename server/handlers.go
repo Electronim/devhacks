@@ -268,7 +268,35 @@ func ReceiptGet(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if err := json.NewEncoder(res).Encode(receipt); err != nil {
+	type ans struct {
+		Id         mongodb.MyId             `json:"id" bson:"id"`
+		Products   []mongodb.ReturnProduct `json:"products" bson:"products"`
+		TotalPrice float32          `json:"total" bson:"total"`
+		Status     mongodb.ReceiptStatus    `json:"status" bson:"status"`
+	}
+
+	var rsp ans
+	rsp.Id = receipt.Id
+	rsp.TotalPrice = receipt.TotalPrice
+	rsp.Status = receipt.Status
+
+	for _, obj := range receipt.Products {
+		if prod, err := mongodb.GetProduct(obj.Id); err != nil {
+			res.WriteHeader(http.StatusInternalServerError)
+			return
+		} else {
+			newProd := mongodb.ReturnProduct{
+				Id:             prod.Id,
+				Name:           prod.Name,
+				Price:          prod.Price,
+				TotalAvailable: obj.Quantity,
+				TotalSold:      prod.TotalSold,
+			}
+			rsp.Products = append(rsp.Products, newProd)
+		}
+	}
+
+	if err := json.NewEncoder(res).Encode(rsp); err != nil {
 		res.WriteHeader(http.StatusInternalServerError)
 		return
 	}
